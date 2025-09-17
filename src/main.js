@@ -13,7 +13,7 @@ searchForm.addEventListener("input", (evt) => {
   searchData = evt.target.value
 });
 
-searchForm.addEventListener("submit", (evt) => {
+searchForm.addEventListener("submit", async (evt) => {
   evt.preventDefault();
   if (!searchData) {
     iziToast.warning({
@@ -25,23 +25,24 @@ searchForm.addEventListener("submit", (evt) => {
   }
 
   gallery.innerHTML = '<span class="loader"></span>'
-  fetchPictures(searchData, 24)
-    .then(response => {
-      gallery.innerHTML = ''
-      if (!response.total) {
-        throw new Error("Sorry, there are no images matching your search query. Please try again!");
-      }
-      renderPictures(response.hits, gallery)
-      lightbox.refresh()
+  try {
+    const pictures = await fetchPictures(searchData, 24)
+    gallery.innerHTML = ''
+    if (pictures.totalHits === 0) {
+      throw new Error("Sorry, there are no images matching your search query. Please try again!");
+    }
+    renderPictures(pictures.hits, gallery)
+    lightbox.refresh()
+  }
+  catch (error) {
+    gallery.innerHTML = ''
+    iziToast.error({
+      icon: '',
+      position: 'topRight',
+      message: error.message
     })
-    .catch(error => {
-      gallery.innerHTML = ''
-      iziToast.error({
-        icon: '',
-        position: 'topRight',
-        message: error.message
-      })
-    })
+  }
+
   searchData = "";
   searchForm.reset();
 });
