@@ -76,12 +76,12 @@ function showLoadMoreBtn(currentPage, perPage, total) {
     });
   }
   loadMoreBtn.classList.remove('visually-hidden');
+  scrollTwoCardsHigh()
 }
 
 function onLoadMoreBtnClick() {
   loadMoreBtn.classList.add('visually-hidden');
   loadAndRenderPictures()
-  scrollTwoCardsHigh()
 }
 function scrollTwoCardsHigh() {
   const card = document.querySelector("ul.gallery .gallery-item");
