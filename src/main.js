@@ -81,4 +81,17 @@ function showLoadMoreBtn(currentPage, perPage, total) {
 function onLoadMoreBtnClick() {
   loadMoreBtn.classList.add('visually-hidden');
   loadAndRenderPictures()
+  scrollTwoCardsHigh()
+}
+function scrollTwoCardsHigh() {
+  const card = document.querySelector("ul.gallery .gallery-item");
+  // Як на мене простіший варіант
+  // const cardHeight = card.offsetHeight
+  const cardHeight = card.getBoundingClientRect().height
+  setTimeout(() => {
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: "smooth",
+    });
+  }, 500);
 }
