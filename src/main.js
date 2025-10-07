@@ -12,7 +12,7 @@ let perPage = 15;
 const searchForm = document.querySelector("form.search-form");
 const gallery = document.querySelector("ul.gallery");
 const loadMoreBtn = document.querySelector("button.load-more-btn");
-const loader = document.querySelector("span.loader");
+const loader = document.querySelector("div.loader-box");
 
 searchForm.addEventListener("input", (evt) => {
   searchData = evt.target.value;
